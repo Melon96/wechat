@@ -42,23 +42,22 @@ var BUILD_TIMESTAMP = args.ts || gutil.date(new Date(), "yyyymmddHHMMss");
 
 pkg.build = BUILD_TIMESTAMP;
 
-var CONTEXT_PATH = "/invest",
+var CONTEXT_PATH = "/app",
     CDN_ADDRESS = '';
 if (env != "DEV") {
     switch (env) {
         case "FAT":
-            CONTEXT_PATH = "/invest";
+            CONTEXT_PATH = "/app";
             break;
         case "UAT":
-            CONTEXT_PATH = "/invest";
-            // CDN_ADDRESS = 'https://pacdn-m.stg.pingan.com';
+            CONTEXT_PATH = "/app";
             break;
         case "PRD":
-            CONTEXT_PATH = "/invest";
-            CDN_ADDRESS = 'https://pacdn.m.stock.pingan.com';
+            CONTEXT_PATH = "/app";
+            CDN_ADDRESS = '';
             break;
         case "PRDTEST":
-            CONTEXT_PATH = "/invest";
+            CONTEXT_PATH = "/app";
             break;
         default:
             CONTEXT_PATH = "/.";
@@ -69,8 +68,6 @@ if (env != "DEV") {
 var Config = {
     src: ".",
     dest: "../dist",
-    patch: "../patch",
-    output: "../output",
     templates: "../templates"
 };
 
@@ -87,7 +84,6 @@ _.extend(Config, {
         "!" + Config.src + "/js/common/**"
     ],
     copy_2_src: [
-        Config.src + "/modules/app.js",
         Config.src + "/modules/VueHelper.js",
     ],
     copy_dest: Config.dest,
@@ -141,10 +137,7 @@ _.extend(Config, {
     // require优化排除公共库
     exclude: {
         "zepto": 'empty:',
-        'highcharts': 'empty:',
-        'highchartsMore': 'empty:',
         'Chart': 'empty:',
-        'highstock': 'empty:',
         'vue': 'empty:'
     }
 })
@@ -289,8 +282,7 @@ gulp.task("ejs", function() {
                 pkg: pkg,
                 version: pkg.version,
                 ts: BUILD_TIMESTAMP,
-                env: env,
-                cdn: CDN_ADDRESS
+                env: env
             },
             Utils: Utils,
             _: _,
@@ -308,8 +300,7 @@ gulp.task("ejs", function() {
             minifyCSS: true
         }))
         .pipe(handleEjsImage())
-        .pipe(gulp.dest(Config.ejs_dest))
-        .pipe(gulp.dest(Config.output + '/differ/' + env.toLowerCase()));
+        .pipe(gulp.dest(Config.ejs_dest));
 });
 
 /*
@@ -340,39 +331,6 @@ gulp.task('2es5', function () {
         }))
         .pipe(sourcemaps.write('./maps'))
         .pipe(gulp.dest(Config.babel_dest))
-});
-
-gulp.task('pm', function() {
-    return gulp.src(Config.pm_src, {
-            base: Config.src
-        })
-        .pipe(sourcemaps.init())
-        .pipe(rollup({
-            plugins: [
-                nodeResolve({
-                    jsnext: true,
-                    main: true,
-                    browser: true
-                }),
-                commonjs({
-                    include: 'node_modules/**',
-                    sourceMap: false
-                }),
-                rollupBabel({
-                    exclude: 'node_modules/**' // 只编译我们的源代码
-                })
-            ],
-            external: [
-                'zepto'
-            ]
-        }, {
-            format: 'iife',
-            globals: {
-                zepto: '$'
-            }
-        }))
-        .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest(Config.pm_dest))
 });
 
 /*
@@ -421,7 +379,7 @@ gulp.task("js_optimize_old", function() {
         // 优化common
         gulp.src(Config.optimize_src + "/js/**/*.js")
         .pipe(amdOptimize("C", {
-            configFile: Config.src + "/lib/require-config.js",
+            configFile: Config.src + "/libs/require-config.js",
             paths: Config.exclude,
             exclude: Config.optimize_exclude
         }))
@@ -439,7 +397,7 @@ gulp.task("js_optimize_old", function() {
             gulp.src([Config.optimize_src + "/modules/**/*.js", Config.optimize_src + "/js/**/*.js"])
                 .pipe(cached("JS_OPTIMIZE"))
                 .pipe(amdOptimize(modulePath.replace('.js', ''), {
-                    configFile: Config.src + "/lib/require-config.js",
+                    configFile: Config.src + "/libs/require-config.js",
                     baseUrl: Config.optimize_src,
                     paths: Config.exclude,
                     exclude: Config.optimize_exclude.concat(["C"])
@@ -461,7 +419,7 @@ var tasks = [];
         return gulp.src(Config.optimize_src + "/**/*.js", {base: Config.optimize_src})
             // .pipe(sourcemaps.init())
             .pipe(amdOptimize("C", {
-                configFile: Config.src + "/lib/require-config.js",
+                configFile: Config.src + "/libs/require-config.js",
                 baseUrl: Config.optimize_src,
                 exclude: Config.optimize_exclude
             }))
@@ -515,7 +473,7 @@ function createOptTask(modulePaths, taskName, depends) {
                 gulp.src([Config.optimize_src + "/modules/**/*.js", Config.optimize_src + "/js/**/*.js"])
                 	.pipe(cached("JS_OPTIMIZE"))
                     .pipe(amdOptimize(modulePath.replace('.js', ''), {
-                        configFile: Config.src + "/lib/require-config.js",
+                        configFile: Config.src + "/libs/require-config.js",
                         baseUrl: Config.optimize_src,
                         paths: Config.exclude,
                         exclude: Config.optimize_exclude.concat(["C"])
@@ -535,22 +493,6 @@ var j = 0
 gulp.task('md5', function() {
     var base = Config.src;
     return gulp.src(Config.md5_src, { base: base})
-        // .pipe(rename(function(pathObj) {
-        //     var tmpPathObj, pathStr;
-        //     if (pathObj.extname) {
-        //         pathStr = base + '/' + pathObj.dirname;
-        //         for (var i = 0; i < FILE_MD5_LIST.length; i++) {
-        //             tmpPathObj = FILE_MD5_LIST[i].obj;
-        //             if (j++ < 100) {
-        //                 console.log(tmpPathObj, arguments);
-        //             }
-        //             if (tmpPathObj.dir === pathStr && tmpPathObj.name === pathObj.basename && tmpPathObj.ext === pathObj.extname) {
-        //                 pathObj.extname = '.' + FILE_MD5_LIST[i].md5 + pathObj.extname;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }))
         .pipe(through2.obj(function(file, enc, cb) {
             if (j++ < 1) {
                 console.dir(file)
@@ -561,20 +503,6 @@ gulp.task('md5', function() {
         .pipe(gulp.dest(Config.md5_dest))
 });
 
-/*
- * 打包zip
- */
-gulp.task('archive', function() {
-    return gulp.src(Config.archive_src)
-        .pipe(zip(pkg.name + "_v_" + pkg.version.replace(/\./g, "_") + "_" + env.toLowerCase() + "_" + BUILD_TIMESTAMP + '.zip'))
-        .pipe(gulp.dest(Config.output));
-});
-
-// gulp.task('archive', function () {
-//     return gulp.src('src/*')
-//         .pipe(zip('archive.zip'))
-//         .pipe(gulp.dest('dist'));
-// });
 gulp.task('watch', function() {
     gulp.watch(Config.src + "/less/**/*.less", ['less', 'copy']);
     gulp.watch(Config.src + "/**/*.js", ['copy']);
@@ -640,90 +568,12 @@ gulp.task('copy_patch_2_common', function() {
         .pipe(gulp.dest(Config.output + '/common'));
 })
 
-/*
- * 清空output目录
- */
-gulp.task('clean_output', function() {
-    return gulp.src(Config.output, {
-            read: false
-        })
-        .pipe(rimraf({
-            force: true
-        }));
-});
-
-/*
- * 把dist拷贝到output目录下
- */
-gulp.task('copy_output', function() {
-    return gulp.src(Config.dest + "/**/*", { cwd: Config.dest, base: Config.dest })
-        .pipe(gulp.dest(Config.output + "/differ/" + env.toLowerCase()));
-});
-
-/**
- * 创建各环境空目录（临时）
- */
-gulp.task('mk_output', function() {
-    fs.exists(Config.output, function (exists) {
-        if (!exists) {
-            fs.mkdir(Config.output, function (err) {
-                if(err){
-                    throw err;
-                }
-                fs.mkdir(Config.output + '/differ', function(err) {
-                    if (err) {
-                        throw err;
-                    }
-                    var envs = ['fat', 'uat', 'prd'];
-                    envs.forEach(function(item) {
-                        fs.exists(Config.output + "/differ/" + item, function(exists) {
-                            if (!exists) {
-                                fs.mkdir(Config.output + "/differ/" + item, function(err) {
-                                    if (err) {
-                                        throw err;
-                                    }
-                                });
-                            }
-                        });
-                    });
-                });
-            });
-        }
-    });
-
-    fs.exists(Config.output + '/common', function (exists) {
-        if (!exists) {
-            fs.mkdir(Config.output + '/common', function (err) {
-                if(err){
-                    throw err;
-                }
-            });
-        }
-    });
-});
-
-/**
- * 创建公共目录
- */
-gulp.task('mk_common', function() {
-    fs.mkdir(Config.output + '/common');
-});
-
 /**
  * 把dist拷贝到common目录下（临时）
  */
 gulp.task('copy_common', function() {
     return gulp.src(Config.dest + "/**/*", { cwd: Config.dest, base: Config.dest })
         .pipe(gulp.dest(Config.output + '/common'));
-});
-
-/*
- * 打包zip
- */
-gulp.task('archive_output', function() {
-    return gulp.src(Config.output + "/**/*")
-        .pipe(zip('invest.zip'))
-        .pipe(gulp.dest('../' + Config.output));
 });
 
 /*
@@ -736,11 +586,8 @@ gulp.task('build', function(callback) {
         ['copy', 'copy2', 'ejs', 'source', 'concat_loader'],
         '2es5',
         'js_optimize',
-        'pm',
         'uglifyjs',
         'concatEjsTpl2Js',
-        // 'patch',
-        //'archive',
         function(error) {
             if (error) {
                 console.log(error.message);

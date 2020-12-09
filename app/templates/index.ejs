@@ -8,6 +8,7 @@
 @>
 <body>
     <section id="app">
+    <div style="width: 10rem">
         <el-table
 		    :data="tableData"
 		    border
@@ -17,11 +18,41 @@
 		    <el-table-column
 		      prop="date"
 		      label="日期"
-		      width="100" fixed>
+		      width="150" fixed>
 		    </el-table-column>
 		    <el-table-column
 		      prop="date"
 		      label="日期"
+		      sortable
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
+		      sortable
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
+		      sortable
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
+		      sortable
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
+		      sortable
+		      width="180">
+		    </el-table-column>
+		    <el-table-column
+		      prop="name"
+		      label="姓名"
 		      sortable
 		      width="180">
 		    </el-table-column>
@@ -37,12 +68,21 @@
 		      :formatter="formatter">
 		    </el-table-column>
 		  </el-table>
+	</div>
+		  <br /><br />
 		  <el-tag>标签一</el-tag>
+
 		<el-tag type="gray">标签二</el-tag>
 		<el-tag type="primary">标签三</el-tag>
 		<el-tag type="success">标签四</el-tag>
 		<el-tag type="warning">标签五</el-tag>
 		<el-tag type="danger">标签六</el-tag>
+
+		<i class="el-icon-edit"></i>
+		<i class="el-icon-share"></i>
+		<i class="el-icon-delete"></i>
+		<el-button type="primary" icon="search">搜索</el-button>
+
     </section>
 </body>
 

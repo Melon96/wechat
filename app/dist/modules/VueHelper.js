@@ -1,0 +1,1 @@
+define(["zepto","vue","C"],function(n,t,e){return{getTemplate:function(t,e){var n;window._TEMPLATE=window._TEMPLATE||{},(n=window._TEMPLATE[t])?setTimeout(function(){e(n)},0):o.ajax({url:t,data:{v:_app.version},type:"get",dataType:"text",beforeSend:function(){},complete:function(){},success:function(n){window._TEMPLATE[t]=n,e(n)}})},bootstrap:function(n,t){n.$mount(t)}}});

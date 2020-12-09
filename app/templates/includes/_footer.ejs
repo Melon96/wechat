@@ -1,10 +1,4 @@
-<script>
-        try {
-			if (navigator.userAgent.match(/AYLCAPP/ig) && !navigator.userAgent.match(/anydoor/ig)) {
-				document.body.classList.add('ane');
-			}
-		} catch(e){}
-    </script>
+
 <@ if (_build.env !== 'DEV') { @>
     <script type="text/javascript" src="<@= Utils.cdn((ctx || "")+'/libs/loader.min.js?v='+_build.ts) @>"></script>
 <@ } else { @>
@@ -15,64 +9,36 @@
             requirejs.config({baseUrl:"<@= Utils.cdn(ctx || "") @>"});
             require(['<@= ctx @>/js/version.js?_v=' + parseInt(new Date().getTime()/(5*60*1000))], function(Version) {
                 var ts = '<@= _build.ts @>', checkNum = 'true';
-                try {
-                    //增加调试工具
-                    var debug = localStorage.getItem('TG_DEBUG_TOOLS') === 'true' || location.search.indexOf('debug=true') !== -1;
-                    if (debug) {
-                        localStorage.setItem('TG_DEBUG_TOOLS', true);
-                    }
-                } catch(e){}
+
                 if (ts !== 'dev' && Version.v !== ts) {
                     try {
-                        var checkNum = sessionStorage.getItem('TG_CHECK_PAGE_VERSION');
-                        sessionStorage.setItem('TG_CHECK_PAGE_VERSION', true);
+                        var checkNum = sessionStorage.getItem('WX_CHECK_PAGE_VERSION');
+                        sessionStorage.setItem('WX_CHECK_PAGE_VERSION', true);
                     } catch(e) {
                         checkNum = 'true';
                     }
                 }
                 if (checkNum === 'true') {
-                    if (debug) {
-                        require(['eruda'], function(eruda) {
-                            eruda.init();
-                            require(["C"], function() {
-                                <@ if (data.key) {@>
-                                    C.Switch.getSwitch("<@= data.key@>", function(isGray) {
-                                        if (isGray) {
-                                            require(["<@= data.newFile @>"])
-                                        } else {
-                                            require(["<@= data.oldFile @>"])
-                                        }
-                                    });
-                                <@ }@>
+                    
+                    require(["C"], function () {
+                        <@ if (data.key) {@>
+                            C.Switch.getSwitch("<@= data.key@>", function(isGray) {
+                                if (isGray) {
+                                    require(["<@= data.newFile @>"])
+                                } else {
+                                    require(["<@= data.oldFile @>"])
+                                }
                             });
-                            <@ if(data.main){ @>
-                                <@ if(data.main instanceof Array){ _.each(data.main,function(item){@>
-                                require(["<@= item @>"]);
-                                <@ })}else{ @> 
-                                    require(["<@= data.main @>"]);
-                                <@} @>
-                            <@ } @>
-                        });
-                    } else {
-                        require(["C"], function () {
-                            <@ if (data.key) {@>
-                                C.Switch.getSwitch("<@= data.key@>", function(isGray) {
-                                    if (isGray) {
-                                        require(["<@= data.newFile @>"])
-                                    } else {
-                                        require(["<@= data.oldFile @>"])
-                                    }
-                                });
-                            <@ }@>
-                        });
-                        <@ if(data.main){ @>
-                            <@ if(data.main instanceof Array){ _.each(data.main,function(item){@>
-                            require(["<@= item @>"]);
-                            <@ })}else{ @> 
-                                require(["<@= data.main @>"]);
-                            <@} @>
-                        <@ } @>
-                    }
+                        <@ }@>
+                    });
+                    <@ if(data.main){ @>
+                        <@ if(data.main instanceof Array){ _.each(data.main,function(item){@>
+                        require(["<@= item @>"]);
+                        <@ })}else{ @> 
+                            require(["<@= data.main @>"]);
+                        <@} @>
+                    <@ } @>
+                    
                 } else {
                     //如果当前版本跟线上版本不一致,强制刷新缓存
                     if (location.search > 0) {
