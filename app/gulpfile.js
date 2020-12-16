@@ -37,30 +37,30 @@ var nodeResolve = require('rollup-plugin-node-resolve');
 process.chdir("www");
 
 // 获取env
-var env = args.env;
+var env = args.env || 'PRD';
 var BUILD_TIMESTAMP = args.ts || gutil.date(new Date(), "yyyymmddHHMMss");
 
 pkg.build = BUILD_TIMESTAMP;
 
-var CONTEXT_PATH = "/app",
+var CONTEXT_PATH = ".",
     CDN_ADDRESS = '';
 if (env != "DEV") {
     switch (env) {
         case "FAT":
-            CONTEXT_PATH = "/app";
+            CONTEXT_PATH = ".";
             break;
         case "UAT":
-            CONTEXT_PATH = "/app";
+            CONTEXT_PATH = ".";
             break;
         case "PRD":
-            CONTEXT_PATH = "/app";
+            CONTEXT_PATH = ".";
             CDN_ADDRESS = '';
             break;
         case "PRDTEST":
-            CONTEXT_PATH = "/app";
+            CONTEXT_PATH = ".";
             break;
         default:
-            CONTEXT_PATH = "/.";
+            CONTEXT_PATH = ".";
     }
 }
 
@@ -362,12 +362,12 @@ gulp.task('concatEjsTpl2Js', function() {
  **/
 gulp.task('concat_loader', function() {
     gulp.src([
-            "lib/require.js",
-            "lib/require-config.js"
+            "libs/require.js",
+            "libs/require-config.js"
         ])
         .pipe(concat("loader.min.js"))
         .pipe(uglify().on("error", gutil.log))
-        .pipe(gulp.dest(Config.dest + "/lib"))
+        .pipe(gulp.dest(Config.dest + "/libs"))
 });
 /*
  * require js 优化

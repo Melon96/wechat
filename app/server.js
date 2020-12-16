@@ -23,11 +23,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var expressLess = require('express-less');
  app.use('/www/css', expressLess(__dirname + '/www/less'));
- app.use('/app/css', expressLess(__dirname + '/www/less'));
+ app.use('/css', expressLess(__dirname + '/www/less'));
 
 //设置静态路径
 app.use('/www', express.static('www'));
-app.use('/app', express.static('www'));
+app.use('/', express.static('www'));
 
 //路径
 var CONTEXT_PATH = "/www",
@@ -65,7 +65,7 @@ var index = require('./routes/index');
 
 var request = require("request");
 
-app.use('/app/*.html', function(req, res){
+app.use('/*.html', function(req, res){
   res.render(req.params[0]);
 });
 
