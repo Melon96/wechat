@@ -1,0 +1,45 @@
+<@- include('../includes/_header.ejs', 
+	{
+		data:{
+			title:"市场估值",
+			css:["css/app.css"]
+		}
+	});
+@>
+<body>
+    <section id="app" v-cloak>
+    	<p class="page-top" v-if="list.length">更新时间：{{updateTime}}</p>
+   		<ul class="sk-comps-list" v-if="list.length">
+   			<li class="flexbox" v-for="item in list">
+   				<div class="item-side" :class="item.className">
+   					<p class="name">{{item.name}}</p>
+   					<p class="item-star"><i class="el-icon-star-on" v-for="star in item.rating"></i></p>
+   					<p>估值：{{item.valuationState}}</p>
+   				</div>
+   				<div class="flex item-main">
+   					<dl class="flexbox">
+   						<dd class="flex">PE: <strong>{{item.pe}}</strong></dd>
+   						<dd class="flex">百分位: <strong>{{item.peper}}%</strong></dd>
+   					</dl>
+   					<dl class="flexbox">
+   						<dd class="flex">PB: <strong>{{item.pb}}</strong></dd>
+   						<dd class="flex">百分位: <strong>{{item.pbper}}%</strong></dd>
+   					</dl>
+   					<dl class="flexbox">
+   						<dd class="flex">ROE: <strong>{{item.roe}}%</strong></dd>
+   						<dd class="flex">股息率: <strong>{{item.dyr}}%</strong></dd>
+   					</dl>
+   				</div>
+   			</li>
+   		</ul>
+   		<section class="page-loading" v-if="!list.length"><i class="el-icon-loading"></i><p>数据加载中...</p></section>
+    </section>
+</body>
+
+<@- include('../includes/_footer.ejs',
+	{
+		data:{
+			main:"modules/stock/stockComps"
+		}
+	}); 
+@>

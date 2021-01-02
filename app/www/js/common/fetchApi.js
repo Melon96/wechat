@@ -10,7 +10,7 @@ define([
 
 
     var _tokenData = {
-        appName: "AYLCAPP",
+        appName: "weixin",
         tokenId: "",
         cltplt: "h5", //applt可选clt, web, aph, apd, iph, ipd, editor, h5
         cltver: "1.0",
@@ -26,9 +26,7 @@ define([
         //后台请求来源参数  0 h5, 1 app, 2 微信
         source: '',
         ajax: function(opt, noLoading) {
-            // if (Constant.ENV === 'DEV') {
-            //   opt.url = opt.url.indexOf('/') === 0 ? 'https://stock.stg.pingan.com' + opt.url : opt.url;
-            // }
+            
             var self = this;
             return $.ajax({
                 url: opt.url,
@@ -39,7 +37,7 @@ define([
                     if (typeof(opt.beforeSend) === 'function') {
                         opt.beforeSend(xhr, settings);
                     } else {
-                        self.showLoading(noLoading);
+                        //self.showLoading(noLoading);
                     }
                 },
                 success: function(response) {
@@ -53,12 +51,47 @@ define([
                     }
                 },
                 complete: function(xhr, status) {
-                    self.hideLoading(noLoading);
+                    //self.hideLoading(noLoading);
                     if (typeof(opt.complete) === 'function') {
                         opt.complete(xhr, status);
                     }
                 }
             });
+        },
+
+        fAjax: function(ajaxOpt, extrOpt){
+            var self = this,
+                dtd = $.Deferred();
+                ajaxOpt = ajaxOpt || {};
+                extrOpt = extrOpt || {};
+            $.ajax({
+                url: ajaxOpt.url,
+                type: ajaxOpt.type || 'POST',
+                contentType: 'application/json;charset=UTF-8',
+                data: ajaxOpt.data || {},
+                beforeSend: function(xhr, settings) {
+                    ajaxOpt.beforeSend && ajaxOpt.beforeSend(xhr, settings);
+                    //self.showLoading(extrOpt.noLoading);
+                },
+                complete: ajaxOpt.complete
+                }).done(function(res, status, xhr) {
+                    var url = ajaxOpt.url;
+                    if (res.err === 0 ) {
+                        ajaxOpt.success && ajaxOpt.success(res.data || {}, res);
+                        dtd.resolve(res.data || {}, res);
+                    } else {
+                        UI.tip('系统繁忙，请稍后再试！');
+                        dtd.reject(xhr.response, xhr, status);
+                    }
+                }).fail(function(xhr, errorType, error) {
+                    if (!ajaxOpt.error || !ajaxOpt.error(xhr, errorType, error)) {
+                        UI.tip('系统繁忙，请稍后再试！');
+                    }
+                    dtd.reject(xhr, errorType, error);
+                }).always(function() {
+                    //self.hideLoading(extrOpt.noLoading);
+                });
+            return dtd;
         },
         showLoading: function(noLoading) {
             if (!noLoading) {

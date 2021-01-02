@@ -140,26 +140,6 @@ define(['zepto', 'js/common/constant', 'js/common/utils'], function($, Constant,
         if (opt.singlePage) {
             return '#' + url;
         } else {
-            // 全地址跳到非证券的页面重置一下头部
-            var filterUrl = [
-                C.Constant.MOBILE_PATH + '/omm/',
-                C.Constant.STOCK_DOMAIN + '/omm/',
-                C.Constant.MOBILE_PATH + '/omm/',
-                C.Constant.STOCK_DOMAIN + C.Constant.INVEST_PATH + '/',
-                C.Constant.FULL_INVEST_PATH + '/',
-                C.Constant.MOBILE_PATH + '/zuhe/'
-            ]
-            var needResetTitle = true;
-            //相对路径跳转无需重置头部
-            if(url.indexOf('http') !== 0 || opt.notNeedResetTitle){
-                needResetTitle = false;
-            }
-            filterUrl.forEach(function(item) {
-                if (url.indexOf(item) !== -1) {
-                    needResetTitle = false;
-                }
-            });
-            needResetTitle && ui.resetTitle(opt.data && opt.data.title);
             
             return url;
         }
