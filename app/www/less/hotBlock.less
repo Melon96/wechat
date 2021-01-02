@@ -1,0 +1,85 @@
+@import "includes/reset.less";
+@import "includes/common.less";
+
+.hot-con{
+    padding:0 .19rem;
+    .tit{
+        font-size: .34rem;
+        color:#000;
+        text-align: center;
+        margin:.25rem 0;
+        font-weight: bold;
+    }
+    .hot-box{
+        padding-right:.3rem;
+        &:last-child{
+            padding-right: 0;
+        }
+    }
+}
+.hot-block{
+    position: relative;
+    padding:.28rem .2rem 1.12rem;
+    background-color: #fff;
+    .mixin-radius(.25rem);
+    font-size: .24rem;
+    color:#999999;
+    margin-bottom: .21rem;
+    .block-name{
+        font-size: .36rem;
+        color:#222;
+        font-weight: bold;
+    }
+    .block-chart{
+        width:1.29rem;
+        height:.89rem;
+        overflow: hidden;
+    }
+    .t-rate{
+        font-size: .28rem;
+        color:#333;
+    }
+    .t-big{
+        font-size: .46rem;
+        font-weight: bold;
+    }
+    .label{
+        display: inline-block;
+        width:1.88rem;
+        height:.46rem;
+        line-height: .46rem;
+        font-size: .24rem;
+        text-align: center;
+        margin-left: .2rem;
+        .mixin-radius(.1rem);
+        margin-top: .2rem;
+    }
+    .cash-in{
+        color:@high;
+        background-color: #FCDDDD;
+    }
+    .cash-out{
+        color:#37A037;
+        background-color: rgba(55,160,55,0.2);
+    }
+    .pe-box{
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:.7rem;
+        padding:.17rem .19rem .2rem;
+        color:#fff;
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
+    }
+    .pe-high{
+        background-color: @high;
+    }
+    .pe-low{
+        background-color: @green;
+    }
+    .pe-normal{
+        background-color: @normal;
+    }
+}

@@ -1,0 +1,48 @@
+@import "includes/reset.less";
+@import "includes/element-ui2.less";
+@import "includes/common.less";
+
+.indus-table{
+    font-size: .24rem;
+    margin-top:.28rem;
+    thead{
+        color:#222;
+    }
+    th,td{
+        height:1.1rem;
+        background-color: #fff;
+    }
+    .el-table__fixed-header-wrapper thead div,
+    .el-table__header-wrapper thead div{
+        background-color: #fff;
+    }
+    td,th.is-leaf{
+        border-bottom-color:#d0d0d0;
+    }
+    th:first-child .cell,
+    td:first-child .cell{
+        padding: 0 .24rem 0 .4rem;
+    }
+    td:first-child .cell{
+        color:#222;
+        font-weight: bold;
+        text-align: center;
+    }
+    .i-label{
+        display: inline-block;
+        width:1.5rem;
+        height:.46rem;
+        font-size: .24rem;
+        color:#fff;
+        text-align: center;
+    }
+    .label-low{
+        background-color: @green;
+    }
+    .label-high{
+        background-color: @high;
+    }
+    .label-normal{
+        background-color: @normal;
+    }
+}

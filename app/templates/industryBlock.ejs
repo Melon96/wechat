@@ -1,0 +1,63 @@
+<@- include('includes/_header.ejs', 
+	{
+		data:{
+			title:"stock",
+			css:["css/industryBlock.css"]
+		}
+	});
+@>
+<body>
+	<header>
+        <div class="header flexbox">
+            <div class="head-l"><i class="i-back"></i></div>
+            <div class="flex head-t">行业/板块</div>
+            <div class="head-r">文案</div>
+        </div>
+        <div class="header-space"></div>
+    </header>
+    <section id="app">
+		<el-table
+		:data="tableData"
+		style="width: 100%"
+		height="730" class="indus-table">
+		<el-table-column
+		  fixed 
+		  prop="industry"
+		  label="行业"
+		  width="210">
+		  <!-- <template v-slot:default="slotProps">
+			  <p>{{ slotProps.row.industry }}</p>
+			  <span class="i-label">{{ slotProps.row.label }}</span>
+		  </template> -->
+		</el-table-column>
+		<el-table-column
+		  prop="pe"
+		  label="PE"
+		  width="150">
+		</el-table-column>
+		<el-table-column
+		  prop="peBit"
+		  label="PE分位"
+		  width="150">
+		</el-table-column>
+		<el-table-column
+		  prop="pb"
+		  label="PB"
+		  width="150">
+		</el-table-column>
+		<el-table-column
+		  prop="pbBit"
+		  label="PB分位"
+		  width="150">
+		</el-table-column>
+	  </el-table>
+    </section>
+</body>
+
+<@- include('includes/_footer.ejs',
+	{
+		data:{
+			main:"modules/index/industryBlock"
+		}
+	}); 
+@>

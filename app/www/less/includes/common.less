@@ -1,8 +1,38 @@
-
+//公共函数
+@color3:#333;
+@color6:#666;
+@color0:#000;
+@green:#37A037;
+@red:#E2233E;
+@high:#F05555;
+@normal:#6CA5ED;
+.t-red{
+    color:@red !important;
+}
+.t-green{
+    color:@green !important;
+}
+.t-l{
+    text-align: left !important;
+}
+.t-c{
+    text-align: center !important;
+}
+.t-r{
+    text-align: right !important;
+}
+.mixin-radius(@r){
+    border-radius:@r;
+    -webkit-border-radius:@r;
+}
+img{
+    width:100%;
+}
 body{
 	color: #333;
 	font-size: 0.28rem;
 	line-height: 1.5;
+    background-color: #F2F2F2;
 }
 
 .flexbox {
@@ -24,6 +54,39 @@ body{
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1
+}
+.header{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:.88rem;
+    background-color: #F8F8F8;
+    .head-t{
+        font-size: .34rem;
+        color:@color3;
+        text-align: center;
+    }
+    .head-l,.head-r{
+        padding:0 .3rem;
+    }
+    .i-back{
+        display: inline-block;
+        vertical-align: middle;
+        width:.15rem;
+        height:.15rem;
+        border-left: .02rem solid #333;
+        border-bottom:.02rem solid #333;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
+    .head-r{
+        font-size: .28rem;
+        color:@color3;
+    }
+}
+.header-space{
+    height:.88rem;
 }
 
 .page-top{
