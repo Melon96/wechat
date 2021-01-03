@@ -15,49 +15,49 @@ define([
                 title: 'Hello World',
                 tableData: [{
                     industry: '农林牧渔',
-                    label:'',
+                    peper:'0.85',
+                    pe: '15.11',
+                    peBit: '74.49%',
+                    pb: '1.51',
+                    pbBit: '77.23%'
+                }, {
+                    industry: '农林牧渔',
+                    peper:'0.5',
+                    pe: '15.31',
+                    peBit: '74.49%',
+                    pb: '1.51',
+                    pbBit: '77.23%'
+                }, {
+                    industry: '农林牧渔',
+                    peper:'0.76',
                     pe: '15.91',
                     peBit: '74.49%',
                     pb: '1.51',
                     pbBit: '77.23%'
                 }, {
                     industry: '农林牧渔',
-                    label:'low',
+                    peper:'0.1',
+                    pe: '15.51',
+                    peBit: '74.49%',
+                    pb: '1.51',
+                    pbBit: '77.23%'
+                }, {
+                    industry: '农林牧渔',
+                    peper:'0.15',
                     pe: '15.91',
                     peBit: '74.49%',
                     pb: '1.51',
                     pbBit: '77.23%'
                 }, {
                     industry: '农林牧渔',
-                    label:'high',
+                    peper:'0.3',
                     pe: '15.91',
                     peBit: '74.49%',
                     pb: '1.51',
                     pbBit: '77.23%'
                 }, {
                     industry: '农林牧渔',
-                    label:'normal',
-                    pe: '15.91',
-                    peBit: '74.49%',
-                    pb: '1.51',
-                    pbBit: '77.23%'
-                }, {
-                    industry: '农林牧渔',
-                    label:'low',
-                    pe: '15.91',
-                    peBit: '74.49%',
-                    pb: '1.51',
-                    pbBit: '77.23%'
-                }, {
-                    industry: '农林牧渔',
-                    label:'low',
-                    pe: '15.91',
-                    peBit: '74.49%',
-                    pb: '1.51',
-                    pbBit: '77.23%'
-                }, {
-                    industry: '农林牧渔',
-                    label:'high',
+                    peper:'0.6',
                     pe: '15.91',
                     peBit: '74.49%',
                     pb: '1.51',
@@ -70,7 +70,7 @@ define([
         },
 		mounted: function(){
 
-		},
+        },
 		methods: {
 			formatIndus: function(row, column) {
 		        return '<p>'+row.industry+'</p>';

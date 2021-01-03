@@ -56,6 +56,7 @@ body{
     flex: 1
 }
 .header{
+	z-index: 99999;
     position: fixed;
     top:0;
     left:0;
@@ -126,13 +127,13 @@ body{
 		}
 	}
 	.hight{
-		background-color: #f05455;
+		background-color: @high;
 	}
 	.normal{
-		background-color: #6ca4ee;
+		background-color: @normal;
 	}
 	.lower{
-		background-color: #37a037;
+		background-color: @green;
 	}
 	.item-main{
 		background-color: #fff;
@@ -155,11 +156,10 @@ body{
 			padding: 0.1rem 0;
 			color: #999;
 			strong {
-				color: #111;
+				color:@color3;
 				font-size: 0.3rem;
 			}
 		}
 	}
-	
 }
 
