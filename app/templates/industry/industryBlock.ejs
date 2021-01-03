@@ -1,4 +1,4 @@
-<@- include('includes/_header.ejs', 
+<@- include('../includes/_header.ejs', 
 	{
 		data:{
 			title:"stock",
@@ -15,7 +15,7 @@
         </div>
         <div class="header-space"></div>
     </header>
-    <section id="app">
+    <section id="app" v-cloak>
 		<el-table
 		:data="tableData"
 		style="width: 100%"
@@ -54,10 +54,10 @@
     </section>
 </body>
 
-<@- include('includes/_footer.ejs',
+<@- include('../includes/_footer.ejs',
 	{
 		data:{
-			main:"modules/index/industryBlock"
+			main:"modules/industry/industryBlock"
 		}
 	}); 
 @>
