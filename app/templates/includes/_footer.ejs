@@ -1,12 +1,12 @@
 
 <@ if (_build.env !== 'DEV') { @>
-    <script type="text/javascript" src="<@= Utils.cdn((ctx || "")+'/libs/loader.min.js?v='+_build.ts) @>"></script>
+    <script type="text/javascript" src="<@= (ctx || "")+'/libs/loader.min.js?v='+_build.ts @>"></script>
 <@ } else { @>
-    <script type="text/javascript" src="<@= Utils.cdn((ctx || "")+'/libs/require.js?v='+_build.ts) @>"></script>
-    <script type="text/javascript" src="<@= Utils.cdn((ctx || "")+'/libs/require-config.js?v='+_build.ts) @>"></script>
+    <script type="text/javascript" src="<@= (ctx || "")+'/libs/require.js?v='+_build.ts @>"></script>
+    <script type="text/javascript" src="<@= (ctx || "")+'/libs/require-config.js?v='+_build.ts @>"></script>
 <@ } @>
     <script type="text/javascript">
-            requirejs.config({baseUrl:"<@= Utils.cdn(ctx || "") @>"});
+            requirejs.config({baseUrl:"<@= (ctx || "") @>"});
             require(['<@= ctx @>/js/version.js?_v=' + parseInt(new Date().getTime()/(5*60*1000))], function(Version) {
                 var ts = '<@= _build.ts @>', checkNum = 'true';
 

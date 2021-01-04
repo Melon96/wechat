@@ -1,20 +1,20 @@
-<@- include('../includes/_header.ejs', 
+<@- include('includes/_header.ejs', 
 	{
 		data:{
-			title:"stock",
+			title:"行业/板块",
 			css:["css/industryBlock.css"]
 		}
 	});
 @>
 <body>
-	<header>
+	<!-- <header>
         <div class="header flexbox">
             <div class="head-l"><i class="i-back"></i></div>
             <div class="flex head-t">行业/板块</div>
             <div class="head-r">文案</div>
         </div>
         <div class="header-space"></div>
-    </header>
+    </header> -->
     <section id="app" v-cloak>
 		<el-table
 		:data="tableData"
@@ -58,7 +58,7 @@
     </section>
 </body>
 
-<@- include('../includes/_footer.ejs',
+<@- include('includes/_footer.ejs',
 	{
 		data:{
 			main:"modules/industry/industryBlock"

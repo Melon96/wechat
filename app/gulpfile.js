@@ -47,7 +47,7 @@ var CONTEXT_PATH = ".",
 if (env != "DEV") {
     switch (env) {
         case "FAT":
-            CONTEXT_PATH = ".";
+            CONTEXT_PATH = "";
             break;
         case "UAT":
             CONTEXT_PATH = ".";
@@ -57,10 +57,10 @@ if (env != "DEV") {
             CDN_ADDRESS = '';
             break;
         case "PRDTEST":
-            CONTEXT_PATH = ".";
+            CONTEXT_PATH = "";
             break;
         default:
-            CONTEXT_PATH = ".";
+            CONTEXT_PATH = "";
     }
 }
 
@@ -143,7 +143,7 @@ _.extend(Config, {
 })
 
 var Utils = new Utils(env, {CONTEXT_PATH: CONTEXT_PATH, CDN_ADDRESS: CDN_ADDRESS});
-var FILE_MD5_LIST = [];
+/*var FILE_MD5_LIST = [];
 (function(){
     var files = glob.sync(Config.md5_src);
     for(var i = 0;i<files.length;i++){
@@ -157,7 +157,7 @@ var FILE_MD5_LIST = [];
             })
         }
     }
-})();
+})();*/
 
 var handleEnv = function() {
     return through2.obj(function(file, enc, cb) {
@@ -168,6 +168,7 @@ var handleEnv = function() {
     });
 };
 
+/*
 var handleEjsImage = function() {
     return through2.obj(function(file, enc, cb) {
         var content = file.contents.toString();
@@ -233,7 +234,7 @@ var handleLessImage = function() {
         }));
         return cb(null, file);
     })
-};
+}; */
 
 /*
  * 清空目标工程目录
@@ -299,7 +300,7 @@ gulp.task("ejs", function() {
             minifyJS: true,
             minifyCSS: true
         }))
-        .pipe(handleEjsImage())
+        //.pipe(handleEjsImage())
         .pipe(gulp.dest(Config.ejs_dest));
 });
 
@@ -311,7 +312,7 @@ gulp.task('less', function() {
         .pipe(less({
             Config: [path.join(__dirname, 'less', 'includes')]
         }))
-        .pipe(handleLessImage())
+        //.pipe(handleLessImage())
         .pipe(cleanCSS({compatibility: '*'}))
         .pipe(gulp.dest(Config.less_dest));
 });
@@ -575,6 +576,8 @@ gulp.task('copy_common', function() {
     return gulp.src(Config.dest + "/**/*", { cwd: Config.dest, base: Config.dest })
         .pipe(gulp.dest(Config.output + '/common'));
 });
+
+
 
 /*
  * 开始构建

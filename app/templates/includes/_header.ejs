@@ -14,14 +14,14 @@
     <meta name="iphonex-fullscreen">
     <@ if(data.css){ @>
         <@ if(data.css instanceof Array){ _.each(data.css,function(item){@>
-			<link rel="stylesheet" id="app-css-link" href="<@= Utils.cdn((ctx || "")+'/'+ item +'?v='+_build.ts) @>" type="text/css" />
+			<link rel="stylesheet" id="app-css-link" href="<@= ctx +'/'+ item +'?v='+_build.ts @>" type="text/css" />
         <@ })}else{ @>
-			<link rel="stylesheet" id="app-css-link" href="<@= Utils.cdn((ctx || "")+'/'+ data.css +'?v='+_build.ts) @>" type="text/css" />
+			<link rel="stylesheet" id="app-css-link" href="<@= ctx +'/'+ data.css +'?v='+_build.ts @>" type="text/css" />
         <@} @>
     <@ }else if (data.css !== null){ @>
-		<link rel="stylesheet" id="app-css-link" href="<@= Utils.cdn((ctx || "")+'/css/app.css?v='+_build.ts) @>" type="text/css" />
+		<link rel="stylesheet" id="app-css-link" href="<@= ctx +'/css/app.css?v='+_build.ts @>" type="text/css" />
     <@ } @>
-    <script type="text/javascript" src="<@= Utils.cdn((ctx || "")+'/js/flexible.js?v='+_build.ts) @>"></script>
+    <script type="text/javascript" src="<@= ctx +'/js/flexible.js?v='+_build.ts @>"></script>
 	<script type="text/javascript">
 		var _app = {
 			env : "<@= _build.env @>",
