@@ -26,11 +26,11 @@
 
 	var DOMAIN = '',
 		PATH = '',
-		PREFIX = '';
+		PREFIX = 'http://123.207.26.168:5000';
 
 	switch(ENV) {
 		case 'DEV':
-			DOMAIN = 'http://123.207.26.168:5000'
+			DOMAIN = 'http://123.207.26.168'
 			PREFIX = 'http://123.207.26.168:5000';
 		break;
 	}
