@@ -1,1 +1,1 @@
-!function(){var i=window._appver={v:"20210104234523"};"function"==typeof define&&define.amd&&define(function(n,e,f){return i})}();
+!function(){var i=window._appver={v:"20210106185449"};"function"==typeof define&&define.amd&&define(function(n,e,f){return i})}();
