@@ -39,7 +39,7 @@ define([
 			},
 			parseData: function(list){
 				var temp = [], item = {};
-				var grades = ['较低','低', '正常', '高', '较高'], classNames = ['moreLower','lower','normal','hight','moreHight'];
+				var grades = ['低','偏低', '正常', '偏高', '高'], classNames = ['moreLower','lower','normal','hight','moreHight'];
 				for(var i=0; i<list.length; i++) {
 					item = list[i];
 					var peper = item.peper;
